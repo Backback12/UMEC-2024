@@ -42,7 +42,8 @@ void backwardstep2() {
 }
 
 AccelStepper stepperA(forwardstep1, backwardstep1);   // assign wrappers
-AccelStepper stepperB(forwardstep2, backwardstep2);
+//AccelStepper stepperB(forwardstep2, backwardstep2);
+AccelStepper stepperB(backwardstep2, forwardstep2);   // INVERT STEPPER B
 
 // ********************************************** SERVO WRAPPER FUNCTIONS ****************************
 
