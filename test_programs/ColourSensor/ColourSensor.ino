@@ -3,13 +3,21 @@
 int r, g, b;
 
 void setup() {
+  
   // put your setup code here, to run once:
+  
+  
   Serial.begin(9600);
   while (!Serial);
+
+  Serial.println("Starting sensor");
 
   if (!APDS.begin()) {
     Serial.println("Error initializing APDS9960 sensor!");
   }
+
+  Serial.println("Starting LED boost");
+  
   APDS.setLEDBoost(3);
 
 

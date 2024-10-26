@@ -82,8 +82,9 @@ void setup()
 
 
 void mot_drive(float speed_A, float speed_B, float duration) {
-  stepper1.setSpeed(speed_A);
-  stepper2.setSpeed(speed_B);
+  stepper1.setMaxSpeed(speed_A);
+  stepper2.setMaxSpeed(speed_B);
+//  stepper2.
 }
 void mot_stop() {
   stepper1.stop();
@@ -115,9 +116,9 @@ void loop()
    stepper2.run();
 
 
-   if (millis() > 4000) {
+   if (millis() > 8000) {
     
-    drive_stop();
+    mot_stop();
     while (true) {}
    }
 }
