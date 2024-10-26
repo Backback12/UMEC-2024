@@ -48,7 +48,8 @@ void backwardstep2() {
 
 // Now we'll wrap the 3 steppers in an AccelStepper object
 AccelStepper stepper1(forwardstep1, backwardstep1);
-AccelStepper stepper2(forwardstep2, backwardstep2);
+//AccelStepper stepper2(forwardstep2, backwardstep2);
+AccelStepper stepper2(backwardstep2, forwardstep2);   // INVERTED
 //AccelStepper stepper3(forwardstep3, backwardstep3);
 
 void setup()
@@ -56,32 +57,67 @@ void setup()
   AFMSbot.begin(); // Start the bottom shield
   AFMStop.begin(); // Start the top shield
 
-  stepper1.setMaxSpeed(100.0);
-  stepper1.setAcceleration(100.0);
-  stepper1.moveTo(24);
+//  stepper1.setMaxSpeed(100.0);
+//  stepper1.setAcceleration(100.0);
+//  stepper1.moveTo(24);
 
-  stepper2.setMaxSpeed(200.0);
-  stepper2.setAcceleration(100.0);
-  stepper2.moveTo(50000);
+  
+  stepper1.setMaxSpeed(500.0);
+  stepper1.setAcceleration(1000.0);
+  stepper1.moveTo(800);
 
+  stepper2.setMaxSpeed(500.0);
+  stepper2.setAcceleration(1000.0);
+  stepper2.moveTo(-800);
+
+//  stepper1.setSpeed(500);
+//  stepper2.setSpeed(500);
 //  stepper3.setMaxSpeed(300.0);
 //  stepper3.setAcceleration(100.0);
 //  stepper3.moveTo(1000000);
+
+//  stepper1.setSpeed(50);
+//  stepper2.setSpeed(50);
 }
+
+
+void mot_drive(float speed_A, float speed_B, float duration) {
+  stepper1.setSpeed(speed_A);
+  stepper2.setSpeed(speed_B);
+}
+void mot_stop() {
+  stepper1.stop();
+  stepper2.stop();
+}
+
 
 void loop()
 {
     // Change direction at the limits
-    if (stepper1.distanceToGo() == 0)
-	stepper1.moveTo(-stepper1.currentPosition());
+//    if (stepper1.distanceToGo() == 0)
+//	stepper1.moveTo(-stepper1.currentPosition());
 
-    if (stepper2.distanceToGo() == 0)
-	stepper2.moveTo(-stepper2.currentPosition());
+//    if (stepper2.distanceToGo() == 0)
+//	stepper2.moveTo(-stepper2.currentPosition());
 
 //    if (stepper3.distanceToGo() == 0)
 //	stepper3.moveTo(-stepper3.currentPosition());
 
-    stepper1.run();
-    stepper2.run();
-//    stepper3.run();   
+//    stepper1.run();
+//    stepper2.run();
+//    stepper3.run();
+
+
+//  stepper1.runSpeed(50);
+//  stepper2.runSpeed(50);
+
+   stepper1.run();
+   stepper2.run();
+
+
+   if (millis() > 4000) {
+    
+    drive_stop();
+    while (true) {}
+   }
 }
