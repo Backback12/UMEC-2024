@@ -1,4 +1,11 @@
 
+
+
+const int SERVO_OFFSET_A = 2; // offset to match servo's "zero point"
+const int SERVO_OFFSET_B = 1; // offset to match servo's "zero point"
+
+
+
 #include <Servo.h>
 #include <AccelStepper.h>
 #include <Adafruit_MotorShield.h>
@@ -38,8 +45,7 @@ AccelStepper stepperA(forwardstep1, backwardstep1);   // assign wrappers
 AccelStepper stepperB(forwardstep2, backwardstep2);
 
 // ********************************************** SERVO WRAPPER FUNCTIONS ****************************
-const int OFFSET_A = 2; // offset to match servo's "zero point"
-const int OFFSET_B = 1; // offset to match servo's "zero point"
+
 
 // -90 = CCW
 //  0  = NOTHING
@@ -52,8 +58,9 @@ void turnServo(Servo target, int amount) {
 //    target.write(OFFSET_B + amount + 90);
 //  }
 }
-
-void setServoA(int deg) {
+boolean isOpen;
+void openServos() {
+  if (isOpen) {return;}
   
 }
 
@@ -97,8 +104,8 @@ void setup() {
 
 //  turnServo(servo_A, 0);
 //  turnServo(servo_B, 0);
-  servo_A.write(90 + 2);
-  servo_B.write(90 + 1);
+  servo_A.write(90 + SERVO_OFFSET_A);
+  servo_B.write(90 + SERVO_OFFSET_B);
   
   
   // start top shield, start bottom shield?
@@ -132,8 +139,12 @@ void loop() {
 //  }
 //
 //  delay(50);
+  
+  
+//  openServos();
 
-
+  // STATE MACHINE
+  
 
   
 }
