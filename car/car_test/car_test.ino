@@ -92,15 +92,57 @@ int isRed() {
 void motor_drive(float speed_A, float speed_B, float duration) {
   // duration is NOT seconds
   //
-  stepperA.setMaxSpeed(speed_A * abs(MOTOR_FACTOR_A)); 
-  stepperB.setMaxSpeed(speed_B * abs(MOTOR_FACTOR_B));
-  stepperA.moveTo(duration * MOTOR_FACTOR_A);
-  stepperB.moveTo(duration * MOTOR_FACTOR_B);
+//  stepperA.setMaxSpeed(speed_A * abs(MOTOR_FACTOR_A)); 
+//  stepperB.setMaxSpeed(speed_B * abs(MOTOR_FACTOR_B));
+//  stepperA.moveTo(duration * MOTOR_FACTOR_A);
+//  stepperB.moveTo(duration * MOTOR_FACTOR_B);
+
+
+
+//  stepperA.setMaxSpeed(duration * abs(MOTOR_FACTOR_A)); 
+//  stepperB.setMaxSpeed(duration * abs(MOTOR_FACTOR_B));
+//  stepperA.moveTo(speed_A * MOTOR_FACTOR_A);
+//  stepperB.moveTo(speed_B * MOTOR_FACTOR_B);
+//  
+//  while (stepperA.distanceToGo() != 0 && stepperB.distanceToGo() != 0) {
+//    stepperA.run();
+//    stepperB.run();
+//  }
+
+
+Serial.println("> DOING TUNR");
   
+//  int x = isRed();
+//  while (x == -1) {x = isRed();} // read until valid read
+//  if (x == 1) {return;}    // ALREADY RED
+  stepperA.setMaxSpeed(500 * abs(MOTOR_FACTOR_A));
+  stepperB.setMaxSpeed(500 * abs(MOTOR_FACTOR_B));
+  stepperA.moveTo(500 * MOTOR_FACTOR_A); // infinite
+  stepperB.moveTo(500 * MOTOR_FACTOR_B);
+
   while (stepperA.distanceToGo() != 0 && stepperB.distanceToGo() != 0) {
     stepperA.run();
     stepperB.run();
   }
+
+  
+  
+  stepperA.setMaxSpeed(500 * abs(MOTOR_FACTOR_A));
+  stepperB.setMaxSpeed(500 * abs(MOTOR_FACTOR_B));
+  stepperA.moveTo(1000 * 6 * MOTOR_FACTOR_A); // infinite
+  stepperB.moveTo(-800 * 6 * MOTOR_FACTOR_B);
+
+  while (stepperA.distanceToGo() != 0 && stepperB.distanceToGo() != 0) {
+    stepperA.run();
+    stepperB.run();
+  }
+//  while (stepperA.distanceToGo() != 0) {
+//    stepperA.run();
+//    
+//  }
+
+  stepperA.stop();
+  stepperB.stop(); 
   
 }
 
@@ -171,7 +213,7 @@ void sweep_out() {
   servo_A.write(90 + SERVO_OFFSET_A + 10 * SERVO_FACTOR_A * sign);
   delay(850 / abs(SERVO_FACTOR_A));
   servo_A.write(90 + SERVO_OFFSET_A + 3 * SERVO_FACTOR_A * sign);
-  delay(700 / abs(SERVO_FACTOR_A));
+  delay(2400 / abs(SERVO_FACTOR_A));
   servo_A.write(90 + SERVO_OFFSET_A + 0);
 
   delay(500);
@@ -183,7 +225,7 @@ void sweep_out() {
   servo_B.write(90 + SERVO_OFFSET_B + 10 * SERVO_FACTOR_B * sign);
   delay(850 / abs(SERVO_FACTOR_B));
   servo_B.write(90 + SERVO_OFFSET_B + 3 * SERVO_FACTOR_B * sign);
-  delay(700 / abs(SERVO_FACTOR_B));
+  delay(2400 / abs(SERVO_FACTOR_B));
   servo_B.write(90 + SERVO_OFFSET_B + 0);
 
   delay(800);
@@ -196,9 +238,9 @@ void sweep_in() {
   servo_B.write(90 + SERVO_OFFSET_B + 3 * SERVO_FACTOR_B * sign);
   delay(100 / abs(SERVO_FACTOR_B));
   servo_B.write(90 + SERVO_OFFSET_B + 10 * SERVO_FACTOR_B * sign);
-  delay(850 / abs(SERVO_FACTOR_B));
+  delay(1450 / abs(SERVO_FACTOR_B));
   servo_B.write(90 + SERVO_OFFSET_B + 3 * SERVO_FACTOR_B * sign);
-  delay(700 / abs(SERVO_FACTOR_B));
+  delay(2400 / abs(SERVO_FACTOR_B));
   servo_B.write(90 + SERVO_OFFSET_B + 0);
 
   delay(500);
@@ -208,9 +250,9 @@ void sweep_in() {
   servo_A.write(90 + SERVO_OFFSET_A + 3 * SERVO_FACTOR_A * sign);
   delay(100 / abs(SERVO_FACTOR_A));
   servo_A.write(90 + SERVO_OFFSET_A + 10 * SERVO_FACTOR_A * sign);
-  delay(850 / abs(SERVO_FACTOR_A));
+  delay(1450 / abs(SERVO_FACTOR_A));
   servo_A.write(90 + SERVO_OFFSET_A + 3 * SERVO_FACTOR_A * sign);
-  delay(700 / abs(SERVO_FACTOR_A));
+  delay(2400 / abs(SERVO_FACTOR_A));
   servo_A.write(90 + SERVO_OFFSET_A + 0);
 
 
@@ -292,7 +334,7 @@ void loop() {
   if (true) {
     printstate("GOING TO START");
     drive_until_red();
-  }
+  
 
 
 
@@ -301,7 +343,7 @@ void loop() {
   //   - fully open servos (clearing snow)
   //   - drive a little forward
   //   - repeat up until red
-  if (true) {
+  
   
   printstate("STARTING SNOW SECTION 1");  
   drive_little_bit();
@@ -353,10 +395,13 @@ void loop() {
   //turn
   // - drive the turn
   printstate("STARTING TURN");
-  motor_drive(500, 200, 30); // mot_A: 500, mot_B: 50, duration: 5000ms
+//  motor_drive(500, 200, 500); // mot_A: 500, mot_B: 50, duration: 5000ms
 //  motor_drive(-10, -20, 30); // mot_A: 500, mot_B: 50, duration: 5000ms
 //  motor_drive(50, 20, 30); // mot_A: 500, mot_B: 50, duration: 5000ms
+
+//  motor_drive(-400, -150, 500); // spdA = 800, motB = 400, max_speed=500
   
+  motor_drive(0, 150, 500); // spdA = 800, motB = 400, max_speed=500
 
   
 
